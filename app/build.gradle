@@ -27,6 +27,7 @@ dependencies {
     implementation rootProject.ext.dependencies["design"]
     //ui
     implementation rootProject.ext.dependencies["cardview-v7"]
+    implementation rootProject.ext.dependencies["kprogresshud"]
     //di
     implementation rootProject.ext.dependencies["butterknife"]
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'

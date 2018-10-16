@@ -98,6 +98,9 @@ public class BitspacemanBean {
     @Override
     public String toString() {
         StringBuffer stringBuffer=new StringBuffer();
+        if(wordList==null){
+            return "";
+        }
         for(WordListBean w:this.wordList){
             stringBuffer.append("position="+w.offset+"  word="+w.word);
         }

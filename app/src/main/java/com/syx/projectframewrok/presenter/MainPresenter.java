@@ -1,9 +1,12 @@
 package com.syx.projectframewrok.presenter;
+import android.app.Activity;
+
 import com.syx.projectframewrok.base.RxPresenter;
 import com.syx.projectframewrok.model.DataManager;
 import com.syx.projectframewrok.model.bean.BitspacemanBean;
 import com.syx.projectframewrok.presenter.contract.MainContract;
 import com.syx.projectframewrok.util.RxUtil;
+import com.syx.projectframewrok.widget.CommonSubscriber;
 
 import javax.inject.Inject;
 
@@ -17,10 +20,12 @@ import io.reactivex.functions.Consumer;
 public class MainPresenter extends RxPresenter<MainContract.View> implements MainContract.Presenter{
 
     private DataManager mDataManager;
+    private Activity mActivity;
 
     @Inject
-    public MainPresenter(DataManager mDataManager) {
+    public MainPresenter(DataManager mDataManager,Activity mActivity) {
         this.mDataManager = mDataManager;
+        this.mActivity=mActivity;
     }
 
     @Override
@@ -33,19 +38,31 @@ public class MainPresenter extends RxPresenter<MainContract.View> implements Mai
     public void searchTel(String tel) {
         addSubscribe(mDataManager.getBitspaceman(tel)
                 .compose(RxUtil.<BitspacemanBean>rxSchedulerHelper())
-                .subscribe(new Consumer<BitspacemanBean>() {
+                .subscribeWith(new CommonSubscriber<BitspacemanBean>(mActivity,mView) {
+
                     @Override
-                    public void accept(BitspacemanBean bitspacemanBeanMyHttpResponse) throws Exception {
-                        mView.showTelInfo(bitspacemanBeanMyHttpResponse);
+                    public void onNext(BitspacemanBean bitspacemanBean) {
+                        if(bitspacemanBean!=null){
+                            mView.showTelInfo(bitspacemanBean);
+                        }
 
                     }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        if(throwable!=null){
-                            System.out.println(throwable.getMessage());
-                        }
-                    }
+
                 }));
+      /* addSubscribe(mDataManager.getBitspaceman(tel)
+       .compose(RxUtil.<BitspacemanBean>rxSchedulerHelper())
+       .subscribe(new Consumer<BitspacemanBean>() {
+           @Override
+           public void accept(BitspacemanBean bitspacemanBean){
+               mView.showTelInfo(bitspacemanBean);
+           }
+       }, new Consumer<Throwable>() {
+           @Override
+           public void accept(Throwable throwable) throws Exception {
+              if(throwable!=null){
+
+              }
+           }
+       }));*/
     }
 }

@@ -7,13 +7,14 @@ import android.widget.TextView;
 
 import com.syx.projectframewrok.R;
 import com.syx.projectframewrok.base.BaseActivity;
+import com.syx.projectframewrok.base.RootActivity;
 import com.syx.projectframewrok.model.bean.BitspacemanBean;
 import com.syx.projectframewrok.presenter.MainPresenter;
 import com.syx.projectframewrok.presenter.contract.MainContract;
 import butterknife.BindView;
 
 
-public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View {
+public class MainActivity extends RootActivity<MainPresenter> implements MainContract.View {
     @BindView(R.id.et_tel)
     EditText etTel;
     @BindView(R.id.bt_search)
@@ -29,6 +30,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     protected void initEventAndData() {
+        super.initEventAndData();
         btSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
