@@ -8,9 +8,14 @@ import com.syx.projectframewrok.presenter.contract.MainContract;
 import com.syx.projectframewrok.util.RxUtil;
 import com.syx.projectframewrok.widget.CommonSubscriber;
 
+import org.reactivestreams.Subscriber;
+
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.subscribers.TestSubscriber;
 
 
 /**
@@ -49,7 +54,7 @@ public class MainPresenter extends RxPresenter<MainContract.View> implements Mai
                     }
 
                 }));
-      /* addSubscribe(mDataManager.getBitspaceman(tel)
+       /*addSubscribe(mDataManager.getBitspaceman(tel)
        .compose(RxUtil.<BitspacemanBean>rxSchedulerHelper())
        .subscribe(new Consumer<BitspacemanBean>() {
            @Override
